@@ -1,29 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import hero from './hero.svg';
 import './App.css';
-import { CallAdapter, CallComposite, createAzureCommunicationCallAdapterFromClient, createStatefulCallClient } from '@azure/communication-react';
-import { CallClient } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-
+import { ChatComposite } from '@azure/communication-react';
 function App() {
-  const [adapter, setAdapter] = useState<CallAdapter | undefined>(undefined);
-
-  const token = "";
-  const userId = "";
-  const groupId = "f01dab1e-0ff1-c1a1-c0de-dec1a551f1ed";
-
-  // set up all of the token stuff in here and set things back to state
-  useEffect(()=>{
-    (async ()=>{
-      const tokenCredential = new AzureCommunicationTokenCredential(token);
-      const callClient = createStatefulCallClient({userId: {communicationUserId: userId}});
-      const callAgent = await callClient.createCallAgent(tokenCredential);
-      const adapter = await createAzureCommunicationCallAdapterFromClient(callClient, callAgent, { groupId });
-      setAdapter(adapter);
-      // set up call client and call agent
-      // set up adapter
-    })();
-  }, [])
+  const [adapter, setAdapter] = useState<undefined>(undefined);
   return (
     <div className="App">
       <header className="App-header">
@@ -39,7 +20,7 @@ function App() {
         >
           Storybook
         </a>}
-        {adapter && <div style={{width: 1024, height: 768}}><CallComposite adapter={adapter}></CallComposite></div>}
+        {adapter && <div style={{width: 1024, height: 768}}><ChatComposite adapter={adapter}></ChatComposite></div>}
       </header>
     </div>
   );
